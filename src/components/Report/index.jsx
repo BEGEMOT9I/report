@@ -2,13 +2,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import Chart from '../Chart'
+
 import { TABLE_FIELDS } from '../../lib/constants'
 import { getData } from '../../lib/actions/data'
 import { getEntries } from './selectors'
 import classes from './styles.scss'
 
 type Props = {
-  entries: Array<Object> | typeof undefined,
+  entries: Array<Entry> | typeof undefined,
   getData: () => void
 }
 type State = {
@@ -319,6 +321,7 @@ class Report extends Component<Props, State> {
             </button>
           </div>
         </div>
+        <Chart entries={entries || []} />
       </div>
     )
   }

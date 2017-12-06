@@ -43,6 +43,7 @@ export function getData(): ThunkAction {
       .then(data => dispatch({ type: GET_DATA_SUCCEEDED, data }))
       .catch(error => {
         dispatch({ type: GET_DATA_FAILED })
+        // eslint-disable-next-line no-console
         console.error(error)
       })
   }

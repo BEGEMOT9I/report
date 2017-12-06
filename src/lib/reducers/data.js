@@ -11,7 +11,13 @@ import type {
 } from '../actions/data'
 
 export type State = {
-  data: Object | typeof undefined,
+  data:
+    | {
+        data: Array<Entry>,
+        recordsFiltered: number,
+        recordsTotal: number
+      }
+    | typeof undefined,
   isFetching: boolean
 }
 
