@@ -1,0 +1,45 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": { "Class": false, "Promise": false, "Generator": false, "google": false },
+  "plugins": ["react", "prettier", "import", "flowtype"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "flowtype/define-flow-type": 1,
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "tabWidth": 2,
+        "useTabs": false,
+        "semi": false
+      }
+    ],
+    "react/prop-types": [0],
+    "react/display-name": 0,
+    "react/no-children-prop": 0,
+    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
+    "react/jsx-curly-spacing": [
+      "error",
+      {
+        "when": "never"
+      }
+    ],
+    "use-isnan": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
+}

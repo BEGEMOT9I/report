@@ -1,0 +1,4 @@
+// @flow
+export const GET_DATA_REQUEST = 'GET_DATA_REQUEST'
+export const GET_DATA_SUCCEEDED = 'GET_DATA_SUCCEEDED'
+export const GET_DATA_FAILED = 'GET_DATA_FAILED'
