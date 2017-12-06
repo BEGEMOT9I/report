@@ -66,10 +66,15 @@ class Report extends Component<Props, State> {
       const { key: fieldKey } = sort
 
       shownEntries = shownEntries.sort((a, b) => {
-        if (+a[fieldKey] < +b[fieldKey]) {
+        const aValue =
+          fieldKey === 'time' ? new Date(a[fieldKey]).getTime() : +a[fieldKey]
+        const bValue =
+          fieldKey === 'time' ? new Date(b[fieldKey]).getTime() : +b[fieldKey]
+
+        if (aValue < bValue) {
           return -1 * sign
         }
-        if (+a[fieldKey] > +b[fieldKey]) {
+        if (aValue > bValue) {
           return 1 * sign
         }
         return 0
