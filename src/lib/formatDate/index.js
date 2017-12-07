@@ -1,8 +1,8 @@
 // @flow
 export default function(date: Date) {
-  const year = date.getUTCFullYear()
-  const month = date.getUTCMonth()
-  const day = date.getUTCDate()
+  const year = date.getFullYear()
+  const month = date.getMonth()
+  const day = date.getDate()
 
   return (
     year +

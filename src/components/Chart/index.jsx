@@ -2,7 +2,12 @@
 import React, { Component } from 'react'
 
 import { TABLE_FIELDS } from '../../lib/constants'
-import { GRAPH_CONFIG } from '../../lib/constants/Chart'
+import {
+  STYLES,
+  GRAPH_CONFIG,
+  OPTIONS,
+  RIGHT_VALUES
+} from '../../lib/constants/Chart'
 import formatDate from '../../lib/formatDate'
 import classes from './styles.scss'
 
@@ -60,7 +65,9 @@ class Chart extends Component<Props> {
     })
 
     if (!this.selectedDate) {
-      this.selectedDate = Object.keys(this.groupedEntries)[0]
+      this.selectedDate = Object.keys(this.groupedEntries).sort(
+        (a, b) => new Date(a) - new Date(b)
+      )[0]
     }
   }
 
@@ -115,6 +122,23 @@ class Chart extends Component<Props> {
     return result
   }
 
+  getGraphs() {
+    let graphs = [this.getGraph('current', `current_${this.selectedParameter}`)]
+
+    if (this.prevDate) {
+      graphs.push(this.getGraph('prev', `prev_${this.selectedParameter}`))
+    }
+
+    graphs.push({
+      showBalloon: false,
+      lineColor: RIGHT_VALUES.axisColor,
+      legendValueText: 'Pessimizer',
+      valueAxis: RIGHT_VALUES.id
+    })
+
+    return graphs
+  }
+
   formatGraphSeria(entries: Array<Entry>, prefix: string) {
     return entries.map(entry =>
       Object.keys(entry).reduce((resultEntry, currentFieldKey) => {
@@ -128,11 +152,8 @@ class Chart extends Component<Props> {
   }
 
   render() {
-    let graphs = [this.getGraph('current', `current_${this.selectedParameter}`)]
-
-    if (this.prevDate) {
-      graphs.push(this.getGraph('prev', `prev_${this.selectedParameter}`))
-    }
+    const data = this.getData()
+    const graphs = this.getGraphs()
 
     return (
       <div className={classes.wrapper}>
@@ -177,48 +198,11 @@ class Chart extends Component<Props> {
           </div>
         </div>
         <AmCharts.React
-          style={{
-            width: '100%',
-            height: '500px'
-          }}
+          style={STYLES}
           options={{
-            type: 'serial',
-            theme: 'light',
-            marginRight: 80,
-            autoMarginOffset: 20,
-            marginTop: 7,
-            dataProvider: this.getData(),
-            valueAxes: [
-              {
-                axisAlpha: 0.2,
-                dashLength: 1,
-                position: 'left'
-              }
-            ],
-            graphs,
-            chartCursor: {
-              cursorPosition: 'start'
-            },
-            categoryField: 'time',
-            categoryAxis: {
-              categoryFunction: function(category) {
-                return new Date(category)
-              },
-              parseDates: true,
-              centerLabelOnFullPeriod: false,
-              minorGridEnabled: true,
-              tickPosition: 'start',
-              minPeriod: 'hh',
-              axisColor: '#000000',
-              axisThickness: 2,
-              axisAlpha: 1,
-              gridCount: 24
-            },
-            legend: {
-              useGraphSettings: true,
-              align: 'center',
-              switchable: false
-            }
+            ...OPTIONS,
+            dataProvider: data,
+            graphs
           }}
         />
       </div>
