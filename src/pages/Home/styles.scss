@@ -1,9 +1,0 @@
-@import '../../components/AppContainer/variables.scss';
-
-.home {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  composes: page from '../../components/AppContainer/styles.scss';
-}
