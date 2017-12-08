@@ -100,20 +100,24 @@ class Report extends Component<Props, State> {
     } else {
       result.push(1)
 
-      if (page < maxLength - 1) {
+      if (page < maxLength - 2) {
         for (let i = 2; i < maxLength - 1; i++) {
           result.push(i)
         }
         result.push('...')
         result.push(endPage)
-      } else if (page > endPage - (maxLength - 2)) {
+      } else if (page > endPage - (maxLength - 3)) {
         result.push('...')
         for (let i = endPage - (maxLength - 2) + 1; i <= endPage; i++) {
           result.push(i)
         }
       } else {
         result.push('...')
-        for (let i = page; i <= page + (maxLength - 4); i++) {
+        for (
+          let i = page - Math.floor((maxLength - 4) / 2);
+          i <= page + Math.floor((maxLength - 4) / 2);
+          i++
+        ) {
           result.push(i)
         }
         result.push('...')
