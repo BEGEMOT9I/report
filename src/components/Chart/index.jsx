@@ -9,6 +9,8 @@ import {
   RIGHT_VALUES
 } from '../../lib/constants/Chart'
 import formatDate from '../../lib/formatDate'
+import parseDateString from '../../lib/parseDateString'
+import convertStringToDate from '../../lib/convertStringToDate'
 import classes from './styles.scss'
 
 const AmCharts = require('@amcharts/amcharts3-react')
@@ -43,11 +45,11 @@ class Chart extends Component<Props> {
     this.groupedEntries = {}
 
     entries.forEach(entry => {
-      const date = new Date(entry.time)
+      const parsedDate = parseDateString(entry.time)
       const beginOfDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
+        parsedDate.year,
+        parsedDate.month,
+        parsedDate.day
       )
 
       let day = []
@@ -114,12 +116,16 @@ class Chart extends Component<Props> {
       )
 
       result = result.map((currentEntry, index) => ({
-        ...currentEntry,
-        ...prevEntries[index]
+        ...prevEntries[index],
+        ...currentEntry
       }))
     }
 
-    return result
+    return result.sort(
+      (a, b) =>
+        convertStringToDate(a.time.toString()) -
+        convertStringToDate(b.time.toString())
+    )
   }
 
   getGraphs() {

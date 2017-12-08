@@ -1,4 +1,6 @@
 // @flow
+import convertStringToDate from '../../convertStringToDate'
+
 export const STYLES = {
   width: '100%',
   height: '500px',
@@ -50,6 +52,7 @@ export const RIGHT_VALUES = {
 export const OPTIONS = {
   type: 'serial',
   theme: 'light',
+  syncDataTimestamps: true,
   autoMarginOffset: 0,
   marginTop: 7,
   valueAxes: [LEFT_VALUES, RIGHT_VALUES],
@@ -60,7 +63,7 @@ export const OPTIONS = {
   categoryField: 'time',
   categoryAxis: {
     categoryFunction: function(category: string) {
-      return new Date(category)
+      return convertStringToDate(category)
     },
     parseDates: true,
     centerLabelOnFullPeriod: false,
